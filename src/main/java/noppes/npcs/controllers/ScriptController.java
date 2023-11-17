@@ -1,5 +1,6 @@
 package noppes.npcs.controllers;
 
+import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -9,6 +10,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.event.world.WorldEvent;
 import noppes.npcs.CustomNpcs;
 import noppes.npcs.LogWriter;
+import noppes.npcs.config.ConfigScript;
 import noppes.npcs.controllers.data.ForgeDataScript;
 import noppes.npcs.controllers.data.GlobalNPCDataScript;
 import noppes.npcs.controllers.data.PlayerDataScript;
@@ -33,7 +35,7 @@ public class ScriptController {
 
 	public static ScriptController Instance;
 	public static boolean HasStart = false;
-	private final ScriptEngineManager manager;
+	private ScriptEngineManager manager;
 	public Map<String, String> languages = new HashMap<String, String>();
 	public Map<String, String> scripts = new HashMap<String, String>();
 	public long lastLoaded = 0;
@@ -55,6 +57,8 @@ public class ScriptController {
 	public ScriptController(){
 		loaded = false;
 		Instance = this;
+		if(!ConfigScript.ScriptingEnabled)
+			return;
 		manager = new ScriptEngineManager();
 		LogWriter.info("Script Engines Available:");
 		for(ScriptEngineFactory fac : manager.getEngineFactories()){
