@@ -61,6 +61,14 @@ public class ScriptController {
 			return;
 		manager = new ScriptEngineManager();
 		LogWriter.info("Script Engines Available:");
+
+		System.setProperty("polyglot.js.allowAllAccess", "true");
+		System.setProperty("polyglot.js.allowHostAccess", "true");
+		System.setProperty("polyglot.js.allowHostClassLookup", "true");
+		System.setProperty("polyglot.js.allowHostClassLoading", "true");
+		System.setProperty("polyglot.js.nashorn-compat", "true");
+		System.setProperty("polyglot.js.allowNativeAccess", "true");
+
 		for(ScriptEngineFactory fac : manager.getEngineFactories()){
 			if(fac.getExtensions().isEmpty())
 				continue;
