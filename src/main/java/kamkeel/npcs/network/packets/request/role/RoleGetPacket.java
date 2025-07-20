@@ -53,8 +53,11 @@ public final class RoleGetPacket extends AbstractPacket {
         if (npc.roleInterface == null)
             return;
 
+        System.out.println("Role on packet " + npc.advanced.role);
         NBTTagCompound compound = new NBTTagCompound();
         compound.setBoolean("RoleData", true);
+        System.out.println("Role on packet packet nbt " + npc.roleInterface.writeToNBT(compound));
+        System.out.println("Role Interface on packet " + npc.roleInterface);
         GuiDataPacket.sendGuiData((EntityPlayerMP) player, npc.roleInterface.writeToNBT(compound));
     }
 }

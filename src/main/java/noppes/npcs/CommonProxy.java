@@ -14,6 +14,7 @@ import net.minecraftforge.common.util.FakePlayer;
 import noppes.npcs.api.IWorld;
 import noppes.npcs.blocks.tiles.TileNpcContainer;
 import noppes.npcs.constants.EnumGuiType;
+import noppes.npcs.constants.EnumRoleType;
 import noppes.npcs.containers.*;
 import noppes.npcs.controllers.data.AnimationData;
 import noppes.npcs.controllers.data.PlayerData;
@@ -38,12 +39,40 @@ public class CommonProxy implements IGuiHandler {
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         if (ID > EnumGuiType.values().length)
             return null;
+        System.out.println("test gui" + ID);
         EntityNPCInterface npc = NoppesUtilServer.getEditingNpc(player);
+        EnumGuiType type;
+
+        switch (npc.advanced.role) {
+            case Bank:
+                type = EnumGuiType.SetupBank;
+                break;
+            case Follower:
+                type = EnumGuiType.SetupFollower;
+                break;
+            case Transporter:
+                type = EnumGuiType.SetupTransporter;
+                break;
+            default:
+                type = EnumGuiType.SetupTrader;
+        }
+
+        System.out.println("Calculated type " + type);
+
         EnumGuiType gui = EnumGuiType.values()[ID];
+
+        if (gui == EnumGuiType.SetupTrader) {
+            return getContainer(type, player, x, y, z, npc);
+        }
+
+        System.out.println("Ran some type shi");
+
         return getContainer(gui, player, x, y, z, npc);
     }
 
     public Container getContainer(EnumGuiType gui, EntityPlayer player, int x, int y, int z, EntityNPCInterface npc) {
+        System.out.println("GUI CONTAINER TYPE SHI " + gui);
+
         if (gui == EnumGuiType.CustomGui)
             return new ContainerCustomGui(new InventoryBasic("", false, x));
 
