@@ -64,7 +64,6 @@ public class GuiNpcAdvanced extends GuiNPCInterface2 implements IGuiData {
         }
         if (button.id == 8) {
             hasChanges = true;
-            System.out.println("Role button value" + button.getValue());
             npc.advanced.setRole(button.getValue());
 
             getButton(3).setEnabled(npc.advanced.role != EnumRoleType.None && npc.advanced.role != EnumRoleType.Postman);
@@ -120,12 +119,9 @@ public class GuiNpcAdvanced extends GuiNPCInterface2 implements IGuiData {
     @Override
     public void setGuiData(NBTTagCompound compound) {
         if (compound.hasKey("RoleData")) {
-            //npc.advanced.setRole(compound.getByte("RoleData"));
             if (npc.roleInterface != null)
                 npc.roleInterface.readFromNBT(compound);
 
-            System.out.println("Role type shi going on role " + npc.roleInterface.npc.advanced.role);
-            System.out.println("Role type shi going on " + npc.advanced.role);
             if (npc.advanced.role == EnumRoleType.Trader)
                 NoppesUtil.requestOpenGUI(EnumGuiType.SetupTrader);
             else if (npc.advanced.role == EnumRoleType.Follower)
