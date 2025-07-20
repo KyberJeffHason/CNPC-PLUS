@@ -48,7 +48,6 @@ public class CommonProxy implements IGuiHandler {
     }
 
     public Container getContainer(EnumGuiType gui, EntityPlayer player, int x, int y, int z, EntityNPCInterface npc) {
-        System.out.println("GUI CONTAINER TYPE SHI " + gui);
 
         if (gui == EnumGuiType.CustomGui)
             return new ContainerCustomGui(new InventoryBasic("", false, x));
