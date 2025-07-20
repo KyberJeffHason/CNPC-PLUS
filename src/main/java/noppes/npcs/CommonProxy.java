@@ -14,6 +14,7 @@ import net.minecraftforge.common.util.FakePlayer;
 import noppes.npcs.api.IWorld;
 import noppes.npcs.blocks.tiles.TileNpcContainer;
 import noppes.npcs.constants.EnumGuiType;
+import noppes.npcs.constants.EnumRoleType;
 import noppes.npcs.containers.*;
 import noppes.npcs.controllers.data.AnimationData;
 import noppes.npcs.controllers.data.PlayerData;
@@ -39,11 +40,15 @@ public class CommonProxy implements IGuiHandler {
         if (ID > EnumGuiType.values().length)
             return null;
         EntityNPCInterface npc = NoppesUtilServer.getEditingNpc(player);
+
         EnumGuiType gui = EnumGuiType.values()[ID];
+
+
         return getContainer(gui, player, x, y, z, npc);
     }
 
     public Container getContainer(EnumGuiType gui, EntityPlayer player, int x, int y, int z, EntityNPCInterface npc) {
+
         if (gui == EnumGuiType.CustomGui)
             return new ContainerCustomGui(new InventoryBasic("", false, x));
 
